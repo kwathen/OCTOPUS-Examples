@@ -41,7 +41,6 @@ dQtyMonthsFU       <- 1
 # At IA 1 if p-value > 0.9 --> futility, p-value < 0.048 --> Early success (Go) otherwise continue
 # at IA 2 if p-value > 0.048 -->futility, p-value < 0.048 --> success (Go) 
 
-
 # UPDATE: Adding a 2nd row for the mQtyPatientsPerArm will add another ISA with  192 per arm
 mQtyPatientsPerArm <- matrix( c( 192, 192,
                                  192, 192 ), nrow=2, ncol = 2 )
@@ -54,7 +53,7 @@ dQtyMonthsBtwIA   <- 0
 # SimulationDesign.R line 31
 
 vISAStartTimes     <- c(  0, 4 )
-nQtyReps           <- 42 # How many replications to simulate each scenario
+nQtyReps           <- 125 # How many replications to simulate each scenario
 vPValueCutoffForFutility <- c( 0.9, 0.048 )
 vPValueCutoffForSuccess  <- c( 0.048, 0.048 )
 
@@ -68,18 +67,20 @@ cTrialDesign <- SetupTrialDesign( strAnalysisModel   = "TTestOneSided",
                                   dQtyMonthsFU       = dQtyMonthsFU,
                                   dQtyMonthsBtwIA    = dQtyMonthsBtwIA,
                                   vPValueCutoffForFutility = vPValueCutoffForFutility,
-                                  vPValueCutoffForSuccess  = vPValueCutoffForSuccess )
+                                  vPValueCutoffForSuccess  = vPValueCutoffForSuccess)
+
+# Update - For this challenge the patient simulator is the normal with point mass so need to update the class in the simulation object
 
 cSimulation  <- SetupSimulations( cTrialDesign,
                                   nQtyReps                  = nQtyReps,
-                                  strSimPatientOutcomeClass = "Normal",
+                                  strSimPatientOutcomeClass = "NormalWithPointMass",
                                   vISAStartTimes            = vISAStartTimes,
-                                  nDesign                   = 1)
+                                  nDesign                   = 1,
+                                  vProbPatAtPointMass       = c( 0.3, 0.1 ), 
+                                  vPointMassValue           = c( 0, 0 ) )
 
 #Save the design file because we will need it in the RMarkdown file for processing simulation results
 save( cTrialDesign, file="cTrialDesign.RData" )
-
-
 
 ####################################################################################################### .
 
@@ -116,9 +117,11 @@ cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "TTestOneSided",
 
 cSimulation2 <- SetupSimulations( cTrialDesign2,
                                   nQtyReps                  = nQtyReps,
-                                  strSimPatientOutcomeClass = "Normal",
+                                  strSimPatientOutcomeClass = "NormalWithPointMass",
                                   vISAStartTimes            = vISAStartTimes,
-                                  nDesign                   = 2 )
+                                  nDesign                   = 2,
+                                  vProbPatAtPointMass       = c( 0.3, 0.1 ), 
+                                  vPointMassValue           = c( 0, 0 ))
 
 cSimulation$SimDesigns[[2]] <- cSimulation2$SimDesigns[[1]]
 
@@ -147,7 +150,11 @@ bDebug2 <- FALSE
 # These files create new generic functions that are utilized during the simulation.
 source( 'RunAnalysis.TTestOneSided.R' )
 source( 'SimPatientOutcomes.Normal.R' )  # This will add the new outcome
+
+# UPDATE: Make sure to source the new patient simulator or it will not work, you will get an error about the default sim patient outcomes
+source( 'SimPatientOutcomes.NormalWithPointMass.R' )  # This will add the new outcome
 source( "BinaryFunctions.R" )
+
 
 
 #################################################################################################### .
@@ -165,7 +172,7 @@ library( "snow" )
 source( "RunParallelSimulations.R" ) # This file has a version of simulations that utilize more cores
 
 # Use 1 less than the number of cores available
-nQtyCores  <- 6
+nQtyCores  <- 8
 
 # The nStartIndex and nEndIndex are used to index the simulations and hence the output files see the RunParallelSimulations.R file
 # for more details

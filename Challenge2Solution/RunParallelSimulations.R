@@ -35,6 +35,7 @@ RunParallelSimulations <- function( nStartIndex = 1, nEndIndex, nQtyCores, cSimu
             source( 'RunAnalysis.TTestOneSided.R' )
             source( 'SimPatientOutcomes.Normal.R' ) # This will add the new outcome
             source( "BinaryFunctions.R" )
+            source( 'SimPatientOutcomes.NormalWithPointMass.R' )
             RunSimulation( cSimulation )
 
         }

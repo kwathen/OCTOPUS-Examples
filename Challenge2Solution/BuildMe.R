@@ -71,11 +71,15 @@ cTrialDesign <- SetupTrialDesign( strAnalysisModel   = "TTestOneSided",
                                   vPValueCutoffForFutility = vPValueCutoffForFutility,
                                   vPValueCutoffForSuccess  = vPValueCutoffForSuccess)
 
+# Update - For this challenge the patient simulator is the normal with point mass so need to update the class in the simulation object
+
 cSimulation  <- SetupSimulations( cTrialDesign,
                                   nQtyReps                  = nQtyReps,
-                                  strSimPatientOutcomeClass = "Normal",
+                                  strSimPatientOutcomeClass = "NormalWithPointMass",
                                   vISAStartTimes            = vISAStartTimes,
-                                  nDesign                   = 1 )
+                                  nDesign                   = 1,
+                                  vProbPatAtPointMass       = c( 0.3, 0.1 ), 
+                                  vPointMassValue           = c( 0, 0 ) )
 
 #Save the design file because we will need it in the RMarkdown file for processing simulation results
 save( cTrialDesign, file="cTrialDesign.RData" )
@@ -115,9 +119,11 @@ cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "TTestOneSided",
 
 cSimulation2 <- SetupSimulations( cTrialDesign2,
                                   nQtyReps                  = nQtyReps,
-                                  strSimPatientOutcomeClass = "Normal",
+                                  strSimPatientOutcomeClass = "NormalWithPointMass",
                                   vISAStartTimes            = vISAStartTimes,
-                                  nDesign                   = 2 )
+                                  nDesign                   = 2,
+                                  vProbPatAtPointMass       = c( 0.3, 0.1 ), 
+                                  vPointMassValue           = c( 0, 0 ))
 
 cSimulation$SimDesigns[[2]] <- cSimulation2$SimDesigns[[1]]
 
@@ -141,11 +147,14 @@ rm( list=(ls()[ls()!="cSimulation" ]))
 gDebug        <- FALSE   # Can be useful to set if( gDebug ) statements when developing new functions
 gnPrintDetail <- 1       # Higher number cause more printing to be done during the simulation.  A value of 0 prints almost nothing and should be used when running
                          # large scale simulations.
-bDebug2 <- FALSE
+bDebug2 <- TRUE
 # Files specific for this project that were added and are not available in OCTOPUS.
 # These files create new generic functions that are utilized during the simulation.
 source( 'RunAnalysis.TTestOneSided.R' )
 source( 'SimPatientOutcomes.Normal.R' )  # This will add the new outcome
+
+# UPDATE: Make sure to source the new patient simulator or it will not work, you will get an error about the default sim patient outcomes
+source( 'SimPatientOutcomes.NormalWithPointMass.R' )  # This will add the new outcome
 source( "BinaryFunctions.R" )
 
 # The next line will execute the simulations
@@ -172,6 +181,6 @@ t2 - t1
 # Create .RData sets of the simulation results
 # simsCombined.Rdata - This will have the main results about the platform and decisions made for each ISA
 #
-mSimRes <- OCTOPUS::BuildSimulationResultsDataSet( )
+#mSimRes <- OCTOPUS::BuildSimulationResultsDataSet( )
 
 

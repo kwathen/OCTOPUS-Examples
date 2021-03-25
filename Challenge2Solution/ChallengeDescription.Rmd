@@ -1,0 +1,24 @@
+---
+title: "Challenge 2 - Solution"
+author: "J. Kyle Wathen"
+date: "3/25/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Description
+For this challenge we want to understand the impact  of what happens if we use a t-test but the data is not normal.  We also explore adding a 2nd ISA.   The changes for the 2nd ISA have already been included as a starting point in the BuildMe.R file. 
+ 
+Please use the folder MultipleISAOFDesignStart as a starting point and add a new patient simulator called NormalWithPointMass.   The SimPatientOutcomes.Normal will serve as an example but please create a NEW simulator so both are available.    Ideally, it would be good to supply the mean of the normal, a point mass value and a percent of patients at the point mass.   For example, you could consider the following cases:
+
+**Case 1**:  Control: 70% of patients come from a N( 0, 1) and 30% have an outcome value of 0.  Experimental: 90% of patients come from a normal( 0.3, 1) and 10% have  an outcome of 0.  
+
+**Case 2**:  Control: 70% of patients come from a N( 0, 1) and 30% have an outcome value of 0.3.  Experimental: 90% of patients come from a normal( 0.3, 1) and 10% have  an outcome of 0.3. 
+
+**Case 3**:  Control: 70% of patients come from a N( 0, 1) and 30% have an outcome value of -0.3.  Experimental: 90% of patients come from a normal( 0.3, 1) and 10% have  an outcome of -0.30. 
+
+
+This challenge does not impact the trial design just the simulation design.   
