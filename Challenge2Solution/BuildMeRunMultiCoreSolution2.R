@@ -24,7 +24,7 @@ if (interactive() || Sys.getenv("SGE_TASK_ID") == "") {
 }
 
 source( "Functions.R")           # Contains a function to delete any previous results
-#CleanSimulationDirectories( )   # only call when you want to erase previous results
+CleanSimulationDirectories( )   # only call when you want to erase previous results
 
 gdConvWeeksToMonths <- 12/52     # Global variable to convert weeks to months, the g is for global as it may be used
 # in functions
@@ -60,7 +60,7 @@ dQtyMonthsBtwIA   <- 0
 vISAStartTimes     <- c(  0, 4 )
 nQtyReps           <- 100 # How many replications to simulate each scenario
 vPValueCutoffForFutility <- c( 0.9, 0.048 )
-vPValueCutoffForSuccess  <- c( 0.048, 0.048 )
+vPValueCutoffForSuccess  <- c( 0.006, 0.048 )
 
 
 
@@ -158,7 +158,7 @@ dQtyMonthsBtwIA   <- 0
 
 vISAStartTimes     <- c(  0, 4 )
 vPValueCutoffForFutility <- c( 0.9, 0.048 )
-vPValueCutoffForSuccess  <- c( 0.048, 0.048 )
+vPValueCutoffForSuccess  <- c( 0.006, 0.048 )
 
 
 
@@ -266,7 +266,7 @@ dQtyMonthsBtwIA   <- 0
 vISAStartTimes     <- c(  0, 4 )
 
 vPValueCutoffForFutility <- c( 0.9, 0.048 )
-vPValueCutoffForSuccess  <- c( 0.048, 0.048 )
+vPValueCutoffForSuccess  <- c( 0.006, 0.048 )
 
 
 
@@ -375,7 +375,7 @@ dQtyMonthsBtwIA   <- 0
 vISAStartTimes     <- c(  0, 4 )
 
 vPValueCutoffForFutility <- c( 0.9, 0.048 )
-vPValueCutoffForSuccess  <- c( 0.048, 0.048 )
+vPValueCutoffForSuccess  <- c( 0.006, 0.048 )
 
 
 
@@ -443,7 +443,7 @@ cSimulation8 <- SetupSimulations( cTrialDesign8,
                                   vISAStartTimes            = vISAStartTimes,
                                   nDesign                   = 8,
                                   vProbPatAtPointMass       = c( 0.3, 0.1 ), 
-                                  vPointMassValue           = c( 0.3, 0.3 ))
+                                  vPointMassValue           = c( -0.3, -0.3 ))
 
 cSimulation$SimDesigns[[8]] <- cSimulation8$SimDesigns[[1]]
 
@@ -503,7 +503,7 @@ library( "snow" )
 source( "RunParallelSimulations.R" ) # This file has a version of simulations that utilize more cores
 
 # Use 1 less than the number of cores available
-nQtyCores  <- 8
+nQtyCores  <- 10
 
 # The nStartIndex and nEndIndex are used to index the simulations and hence the output files see the RunParallelSimulations.R file
 # for more details
@@ -520,6 +520,6 @@ RunParallelSimulations( nStartIndex = 1, nEndIndex = nQtyCores,  nQtyCores, cSim
 # simsISAX.RData will have additional info about ISA X
 # simsMain.RData contain decisions that are made for the platform/ISA
 
-dfTmp <- OCTOPUS::BuildSimulationResultsDataSet( )   # Assigning to dfTmp but the important outputs are saved as .RData
+#dfTmp <- OCTOPUS::BuildSimulationResultsDataSet( )   # Assigning to dfTmp but the important outputs are saved as .RData
 
 # Now you could knit the SimulationReport.rmd

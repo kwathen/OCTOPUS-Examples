@@ -109,8 +109,8 @@ SetupSimulations <- function( cTrialDesign, nQtyReps,
     # Example of updating and adding another scenario, null case was added above
 
     # For this exercise you did not need the probability of response but rather the true mean
-    vTrueMeanTrt <- c( 0.3 )  #This vector is used in the loop below
-    vTrueStdDev  <- c(  1   )
+    vTrueMeanTrt <- c( 0.1, 0.2, 0.3 )  #This vector is used in the loop below
+    vTrueStdDev  <- c(  1, 1, 1   )
     for( iScen in 1:length( vTrueMeanTrt ) )   # Loop over the scenarios in vTrueMeanTrt
     {
         cScen          <- cScen1

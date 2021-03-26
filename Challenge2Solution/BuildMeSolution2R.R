@@ -25,7 +25,7 @@ if (interactive() || Sys.getenv("SGE_TASK_ID") == "") {
 }
 
 source( "Functions.R")           # Contains a function to delete any previous results
-#CleanSimulationDirectories( )   # only call when you want to erase previous results
+CleanSimulationDirectories( )   # only call when you want to erase previous results
 
 gdConvWeeksToMonths <- 12/52     # Global variable to convert weeks to months, the g is for global as it may be used
                                  # in functions
@@ -444,7 +444,7 @@ cSimulation8 <- SetupSimulations( cTrialDesign8,
                                   vISAStartTimes            = vISAStartTimes,
                                   nDesign                   = 8,
                                   vProbPatAtPointMass       = c( 0.3, 0.1 ), 
-                                  vPointMassValue           = c( 0.3, 0.3 ))
+                                  vPointMassValue           = c( -0.3,-0.3 ))
 
 cSimulation$SimDesigns[[8]] <- cSimulation8$SimDesigns[[1]]
 

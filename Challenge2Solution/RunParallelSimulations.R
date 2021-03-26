@@ -13,9 +13,9 @@ RunParallelSimulations <- function( nStartIndex = 1, nEndIndex, nQtyCores, cSimu
 {
     dStartTime <- Sys.time()
     print( paste( "Start Time:", dStartTime ))
+    myCluster2 <- parallel::makeCluster( nQtyCores )
     tryCatch(
     {
-        myCluster2 <- makeCluster( nQtyCores )
         registerDoParallel( myCluster2 )
 
         #This chunk of code will be run for each instance of the loop so it identifies stuff you need such as new functions ect
