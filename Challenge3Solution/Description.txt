@@ -1,0 +1,20 @@
+Requirements:
+    OCTOPUS - Most recent version - https://kwathen.github.io/OCTOPUS/
+    If you are on a Grid the OCTOPUS package could be installed in a subdirectory, such as RLibrary if needed and then just reference the
+    correct package.  The same approach could be taken if you are not running on a grid.
+
+    Example:
+    Install Using Remotes Package
+    remotes::install_github( "kwathen/OCTOPUS")
+
+    Reference
+    library( "OCTOPUS", lib.loc = "RLibrary" )
+
+
+
+
+Description
+The goal of this project is to create a single ISA platform and compare 2 design options.   The first design option will have 1 interim analysis and the second will have 2.  
+
+The patient data should be simulated from a normal distribution and do t-test to compare treatments.   Then use known cutoff values obtained for something like EAST in your decision making.  
+
