@@ -179,7 +179,7 @@ cSimulation3  <- SetupSimulations( cTrialDesign3,
                                    strSimPatientOutcomeClass = "NormalWithPointMass",
                                    vISAStartTimes            = vISAStartTimes,
                                    nDesign                   = 3,
-                                   vProbPatAtPointMass       = c( 0.3, 0.1 ), 
+                                   vProbPatAtPointMass       = c( 0.3, 0.3 ), 
                                    vPointMassValue           = c( 0, 0 ) )
 
 cSimulation$SimDesigns[[3]] <- cSimulation3$SimDesigns[[1]]
@@ -225,7 +225,7 @@ cSimulation4 <- SetupSimulations( cTrialDesign4,
                                   strSimPatientOutcomeClass = "NormalWithPointMass",
                                   vISAStartTimes            = vISAStartTimes,
                                   nDesign                   = 4,
-                                  vProbPatAtPointMass       = c( 0.3, 0.1 ), 
+                                  vProbPatAtPointMass       = c( 0.3, 0.3 ), 
                                   vPointMassValue           = c( 0, 0 ))
 
 cSimulation$SimDesigns[[4]] <- cSimulation4$SimDesigns[[1]]
@@ -287,7 +287,7 @@ cSimulation5  <- SetupSimulations( cTrialDesign5,
                                    strSimPatientOutcomeClass = "NormalWithPointMass",
                                    vISAStartTimes            = vISAStartTimes,
                                    nDesign                   = 5,
-                                   vProbPatAtPointMass       = c( 0.3, 0.1 ), 
+                                   vProbPatAtPointMass       = c( 0.3, 0.3 ), 
                                    vPointMassValue           = c( 0.3, 0.3 ) )
 
 cSimulation$SimDesigns[[5]] <- cSimulation5$SimDesigns[[1]]
@@ -333,7 +333,7 @@ cSimulation6 <- SetupSimulations( cTrialDesign6,
                                   strSimPatientOutcomeClass = "NormalWithPointMass",
                                   vISAStartTimes            = vISAStartTimes,
                                   nDesign                   = 6,
-                                  vProbPatAtPointMass       = c( 0.3, 0.1 ), 
+                                  vProbPatAtPointMass       = c( 0.3, 0.3 ), 
                                   vPointMassValue           = c( 0.3, 0.3 ))
 
 cSimulation$SimDesigns[[6]] <- cSimulation6$SimDesigns[[1]]
@@ -396,7 +396,7 @@ cSimulation7  <- SetupSimulations( cTrialDesign7,
                                    strSimPatientOutcomeClass = "NormalWithPointMass",
                                    vISAStartTimes            = vISAStartTimes,
                                    nDesign                   = 7,
-                                   vProbPatAtPointMass       = c( 0.3, 0.1 ), 
+                                   vProbPatAtPointMass       = c( 0.3, 0.3 ), 
                                    vPointMassValue           = c( -0.3, -0.3 ) )
 
 cSimulation$SimDesigns[[7]] <- cSimulation7$SimDesigns[[1]]
@@ -442,7 +442,7 @@ cSimulation8 <- SetupSimulations( cTrialDesign8,
                                   strSimPatientOutcomeClass = "NormalWithPointMass",
                                   vISAStartTimes            = vISAStartTimes,
                                   nDesign                   = 8,
-                                  vProbPatAtPointMass       = c( 0.3, 0.1 ), 
+                                  vProbPatAtPointMass       = c( 0.3, 0.3 ), 
                                   vPointMassValue           = c( -0.3, -0.3 ))
 
 cSimulation$SimDesigns[[8]] <- cSimulation8$SimDesigns[[1]]
