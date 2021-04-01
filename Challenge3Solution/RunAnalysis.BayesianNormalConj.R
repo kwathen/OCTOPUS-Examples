@@ -13,9 +13,9 @@
 #############################################################################################################################.
 RunAnalysis.BayesianNormalConj <- function( cAnalysis, lDataAna,  nISAAnalysisIndx, bIsFinalISAAnalysis, cRandomizer )
 {
-    #print( "RunAnalysis.TTestOneSided")
+    #print( "RunAnalysis.BayesianNormalConj")
     #if( bDebug2 == TRUE )
-    #     browser()
+      #   browser()
     
     
     # The lRet must be a list list( nGo = nGo, nNoGo = nNoGo, nPause = nPause) 

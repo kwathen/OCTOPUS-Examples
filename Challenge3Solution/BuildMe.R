@@ -25,7 +25,7 @@ if (interactive() || Sys.getenv("SGE_TASK_ID") == "") {
 }
 
 source( "Functions.R")           # Contains a function to delete any previous results
-#CleanSimulationDirectories( )   # only call when you want to erase previous results
+CleanSimulationDirectories( )   # only call when you want to erase previous results
 
 gdConvWeeksToMonths <- 12/52     # Global variable to convert weeks to months, the g is for global as it may be used
                                  # in functions
@@ -55,7 +55,7 @@ dQtyMonthsBtwIA   <- 0
 # SimulationDesign.R line 31
 
 vISAStartTimes     <- c(  0, 4 )
-nQtyReps           <- 100 # How many replications to simulate each scenario
+nQtyReps           <- 250 # How many replications to simulate each scenario
 vPostProbCutoffForFutility   <- c( 0.01, 0.1 )
 vPostProbCutoffForSuccess    <- c( 0.99, 0.95 )
 
@@ -151,9 +151,7 @@ library( bpp )
 # Files specific for this project that were added and are not available in OCTOPUS.
 # These files create new generic functions that are utilized during the simulation.
 source( "RunAnalysis.BayesianNormalConj.R")
-source( 'RunAnalysis.TTestOneSided.R' )
 source( 'SimPatientOutcomes.Normal.R' )  # This will add the new outcome
-source( "BinaryFunctions.R" )
 
 # The next line will execute the simulations
 t1 <- Sys.time()

@@ -23,7 +23,7 @@ if (interactive() || Sys.getenv("SGE_TASK_ID") == "") {
 }
 
 source( "Functions.R")           # Contains a function to delete any previous results
-#CleanSimulationDirectories( )   # only call when you want to erase previous results
+CleanSimulationDirectories( )   # only call when you want to erase previous results
 
 gdConvWeeksToMonths <- 12/52     # Global variable to convert weeks to months, the g is for global as it may be used
 # in functions
@@ -41,7 +41,6 @@ dQtyMonthsFU       <- 1
 # At IA 1 if p-value > 0.9 --> futility, p-value < 0.048 --> Early success (Go) otherwise continue
 # at IA 2 if p-value > 0.048 -->futility, p-value < 0.048 --> success (Go) 
 
-
 # UPDATE: Adding a 2nd row for the mQtyPatientsPerArm will add another ISA with  192 per arm
 mQtyPatientsPerArm <- matrix( c( 192, 192,
                                  192, 192 ), nrow=2, ncol = 2 )
@@ -54,32 +53,33 @@ dQtyMonthsBtwIA   <- 0
 # SimulationDesign.R line 31
 
 vISAStartTimes     <- c(  0, 4 )
-nQtyReps           <- 42 # How many replications to simulate each scenario
-vPValueCutoffForFutility <- c( 0.9, 0.048 )
-vPValueCutoffForSuccess  <- c( 0.048, 0.048 )
+nQtyReps           <- 2 # How many replications to simulate each scenario
+vPostProbCutoffForFutility   <- c( 0.01, 0.1 )
+vPostProbCutoffForSuccess    <- c( 0.99, 0.95 )
 
+vPriorMeans <- c( 0, 0 )   # Equal prior
+vPriorSD    <- c( 10, 10 )
 
-
-cTrialDesign <- SetupTrialDesign( strAnalysisModel   = "TTestOneSided",
+cTrialDesign <- SetupTrialDesign( strAnalysisModel   = "BayesianNormalConj",
                                   strBorrowing       = "AllControls",
                                   mPatientsPerArm    = mQtyPatientsPerArm,
                                   mMinQtyPat         = mMinQtyPats,
                                   vMinFUTime         = vMinFUTime,
                                   dQtyMonthsFU       = dQtyMonthsFU,
                                   dQtyMonthsBtwIA    = dQtyMonthsBtwIA,
-                                  vPValueCutoffForFutility = vPValueCutoffForFutility,
-                                  vPValueCutoffForSuccess  = vPValueCutoffForSuccess )
+                                  vPostProbCutoffForFutility = vPostProbCutoffForFutility,
+                                  vPostProbCutoffForSuccess  = vPostProbCutoffForSuccess,
+                                  vPriorMeans              = vPriorMeans,
+                                  vPriorSD                 = vPriorSD )
 
 cSimulation  <- SetupSimulations( cTrialDesign,
                                   nQtyReps                  = nQtyReps,
                                   strSimPatientOutcomeClass = "Normal",
                                   vISAStartTimes            = vISAStartTimes,
-                                  nDesign                   = 1)
+                                  nDesign                   = 1 )
 
 #Save the design file because we will need it in the RMarkdown file for processing simulation results
 save( cTrialDesign, file="cTrialDesign.RData" )
-
-
 
 ####################################################################################################### .
 
@@ -102,17 +102,19 @@ dQtyMonthsBtwIA   <- 0
 
 vISAStartTimes     <- c(  0, 4 )
 
-vPValueCutoffForFutility <- c( 0.9,   0.048, 0.045 )
-vPValueCutoffForSuccess  <- c( 0.001, 0.016, 0.045 )
+vPostProbCutoffForFutility   <- c( 0.01, 0.05,  0.1 )
+vPostProbCutoffForSuccess    <- c( 0.99, 0.95,  0.9 )
 
-cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "TTestOneSided",
+cTrialDesign2 <- SetupTrialDesign( strAnalysisModel   = "BayesianNormalConj",
                                    strBorrowing       = "AllControls",
                                    mPatientsPerArm    = mQtyPatientsPerArm,
                                    mMinQtyPat         = mMinQtyPats,
                                    vMinFUTime         = vMinFUTime,
                                    dQtyMonthsBtwIA    = dQtyMonthsBtwIA,
-                                   vPValueCutoffForFutility = vPValueCutoffForFutility,
-                                   vPValueCutoffForSuccess = vPValueCutoffForSuccess)
+                                   vPostProbCutoffForFutility = vPostProbCutoffForFutility,
+                                   vPostProbCutoffForSuccess  = vPostProbCutoffForSuccess,
+                                   vPriorMeans              = vPriorMeans,
+                                   vPriorSD                 = vPriorSD)
 
 cSimulation2 <- SetupSimulations( cTrialDesign2,
                                   nQtyReps                  = nQtyReps,
@@ -143,11 +145,13 @@ gDebug        <- FALSE   # Can be useful to set if( gDebug ) statements when dev
 gnPrintDetail <- 0       # Higher number cause more printing to be done during the simulation.  A value of 0 prints almost nothing and should be used when running
 # large scale simulations.
 bDebug2 <- FALSE
+library( bpp )
 # Files specific for this project that were added and are not available in OCTOPUS.
 # These files create new generic functions that are utilized during the simulation.
-source( 'RunAnalysis.TTestOneSided.R' )
+source( "RunAnalysis.BayesianNormalConj.R")
 source( 'SimPatientOutcomes.Normal.R' )  # This will add the new outcome
-source( "BinaryFunctions.R" )
+
+
 
 
 #################################################################################################### .
@@ -165,7 +169,7 @@ library( "snow" )
 source( "RunParallelSimulations.R" ) # This file has a version of simulations that utilize more cores
 
 # Use 1 less than the number of cores available
-nQtyCores  <- 6
+nQtyCores  <- 10
 
 # The nStartIndex and nEndIndex are used to index the simulations and hence the output files see the RunParallelSimulations.R file
 # for more details
@@ -182,6 +186,6 @@ RunParallelSimulations( nStartIndex = 1, nEndIndex = nQtyCores,  nQtyCores, cSim
 # simsISAX.RData will have additional info about ISA X
 # simsMain.RData contain decisions that are made for the platform/ISA
 
-dfTmp <- OCTOPUS::BuildSimulationResultsDataSet( )   # Assigning to dfTmp but the important outputs are saved as .RData
+#dfTmp <- OCTOPUS::BuildSimulationResultsDataSet( )   # Assigning to dfTmp but the important outputs are saved as .RData
 
 # Now you could knit the SimulationReport.rmd

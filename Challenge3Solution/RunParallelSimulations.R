@@ -13,9 +13,9 @@ RunParallelSimulations <- function( nStartIndex = 1, nEndIndex, nQtyCores, cSimu
 {
     dStartTime <- Sys.time()
     print( paste( "Start Time:", dStartTime ))
+    myCluster2 <- parallel::makeCluster( nQtyCores )
     tryCatch(
     {
-        myCluster2 <- makeCluster( nQtyCores )
         registerDoParallel( myCluster2 )
 
         #This chunk of code will be run for each instance of the loop so it identifies stuff you need such as new functions ect
@@ -32,13 +32,10 @@ RunParallelSimulations <- function( nStartIndex = 1, nEndIndex, nQtyCores, cSimu
             # These files create new generic functions that are utilized during the simulation.
             # These files and OCTOPUS are loaded here because it needs to be done for each core.
             library( OCTOPUS )
+            library( mvtnorm )
             library( bpp )
-            # Files specific for this project that were added and are not available in OCTOPUS.
-            # These files create new generic functions that are utilized during the simulation.
-            source( "RunAnalysis.BayesianNormalConj")
-            source( 'RunAnalysis.TTestOneSided.R' )
-            source( 'SimPatientOutcomes.Normal.R' ) # This will add the new outcome
-            source( "BinaryFunctions.R" )
+            source( "RunAnalysis.BayesianNormalConj.R")
+            source( 'SimPatientOutcomes.Normal.R' )  # This will add the new outcome
             RunSimulation( cSimulation )
 
         }
@@ -51,10 +48,16 @@ RunParallelSimulations <- function( nStartIndex = 1, nEndIndex, nQtyCores, cSimu
                     write( strDone, file=paste0( "log/log", i, ".txt") )
                 },
                 error = function( e ){
-                   
+                    strDone <- "Error"
+                    write( strDone, file=paste0( "log/log", i, ".txt") )
+                    
+                   print( paste( "error occured:", e))
                 },
                 warning = function(w){
-                   
+                    strDone <- paste( "warning occured:", w)
+                    write( strDone, file=paste0( "log/log", i, ".txt") )
+                    
+                   print( paste( "warning occured:", w))
                 })
         }
         print( paste( "... Ending foreach at:", Sys.time()))
