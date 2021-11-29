@@ -16,7 +16,7 @@ library( OCTOPUS )
 #Basic setup about the project info for creating the project
 bCreateProjectSubdirectory <- TRUE
 strProjDir                 <- ""   # Since this is not a complete path, directory is created relative to working directory
-strProjName                <- "ThreeISA3"
+strProjName                <- "ThreeISA.EUPEARL"
 
 # Start of info for th platform trial. 
 strAnalysis                <- "BetaBinomial"
