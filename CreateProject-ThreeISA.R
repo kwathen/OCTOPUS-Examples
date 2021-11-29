@@ -13,8 +13,12 @@ library( OCTOPUS )
 # Number of Reps to simulate each trial: 100
 # Each patient if followed up for 6 months to get the binary outcome
 
+#Basic setup about the project info for creating the project
+bCreateProjectSubdirectory <- TRUE
 strProjDir                 <- ""   # Since this is not a complete path, directory is created relative to working directory
-strProjName                <- "ThreeISA"
+strProjName                <- "ThreeISA3"
+
+# Start of info for th platform trial. 
 strAnalysis                <- "BetaBinomial"
 strSimPatOutcome           <- "Binary"
 strBorrowing               <- "AllControls"
@@ -27,8 +31,7 @@ mQtyPats                   <- matrix( c( 50, 100,
                                          25, 125,
                                          25, 125), byrow=TRUE, ncol=2 )
 dQtyMonthsFU               <- 6
-bCreateProjectSubdirectory <- TRUE
-nQtyReps                   <- 250
+nQtyReps                   <- 150
 vISAStartTimes             <- c( 0, 6, 12  )
 
 strResult <- CreateProject( strProjectDirectory        = strProjDir,
