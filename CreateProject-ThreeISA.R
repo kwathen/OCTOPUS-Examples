@@ -9,14 +9,14 @@ library( OCTOPUS )
 # 1st ISA with 50 Patients on Control and 100 on treatment
 # Analysis: Create a new analysis called BetaBinom - The function will only provide example code and the function outline
 # Patient outcome: Binary
-# Borrowing - All controls, since there is only 1 ISA this is not relevant
-# Number of Reps to simulate each trial: 100
+# Borrowing - All controls
+# Number of Reps to simulate each trial: 150
 # Each patient if followed up for 6 months to get the binary outcome
 
 #Basic setup about the project info for creating the project
 bCreateProjectSubdirectory <- TRUE
 strProjDir                 <- ""   # Since this is not a complete path, directory is created relative to working directory
-strProjName                <- "ThreeISA.EUPEARL"
+strProjName                <- "ThreeISA-EUP"
 
 # Start of info for th platform trial. 
 strAnalysis                <- "BetaBinomial"
@@ -31,7 +31,7 @@ mQtyPats                   <- matrix( c( 50, 100,
                                          25, 125,
                                          25, 125), byrow=TRUE, ncol=2 )
 dQtyMonthsFU               <- 6
-nQtyReps                   <- 150
+nQtyReps                   <- 110
 vISAStartTimes             <- c( 0, 6, 12  )
 
 strResult <- CreateProject( strProjectDirectory        = strProjDir,
