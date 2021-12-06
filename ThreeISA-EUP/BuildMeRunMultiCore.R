@@ -209,6 +209,6 @@ RunParallelSimulations( nStartIndex = 1, nEndIndex = nQtyCores,  nQtyCores, cSim
 # simsCombined.Rdata - This will have the all results about the platform and decisions made for each ISA
 # simsISAX.RData will have additional info about ISA X
 # simsMain.RData contain decisions that are made for the platform/ISA
-#dfTmp <- OCTOPUS::BuildSimulationResultsDataSet( )   # Assigning to dfTmp but the important outputs are saved as .RData
+dfTmp <- OCTOPUS::BuildSimulationResultsDataSet( )   # Assigning to dfTmp but the important outputs are saved as .RData
 
 

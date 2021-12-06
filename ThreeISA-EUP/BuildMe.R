@@ -2,7 +2,6 @@
 
 
 
-
 # This file was created as part of the call to OCTOPUS::CreateProject()
 
 #### Description ################################################################################################
@@ -130,10 +129,10 @@ save( cTrialDesign2, file = "cTrialDesign2.RData" )
 
 mMinQtyPats       <- cbind( floor(apply( mQtyPatientsPerArm , 1, sum )/2),  apply( mQtyPatientsPerArm , 1, sum ) )
 vMinFUTime        <- rep( dQtyMonthsFU, ncol( mMinQtyPats) )
-dQtyMonthsBtwIA   <- 0
+dQtyMonthsBtwIA   <- 1
 
-vPUpper           <- c( 0.99,0.99 )
-vPLower           <- c( 0.01, 0.01 )
+vPUpper           <- c( 0.99,0.95 )
+vPLower           <- c( 0.01,0.05)
 dFinalPUpper      <- 0.8
 dFinalPLower      <- 0.1
 
